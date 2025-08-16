@@ -1,5 +1,4 @@
 import { sql } from '@vercel/postgres';
-import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { lusitana } from '@/app/ui/fonts';
 import Link from 'next/link';
@@ -11,18 +10,6 @@ import { notFound } from 'next/navigation';
 type Props = {
   params: Promise<{ id: string }>;
 };
-
-export default async function Page(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
-  ]);
- 
-  if (!invoice) {
-    notFound();
-  }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
